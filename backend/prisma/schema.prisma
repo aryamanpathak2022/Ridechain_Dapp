@@ -1,0 +1,80 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL") // Replace with your actual connection string
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  phone     String   @unique
+  fullname  String
+  address   String
+  dob       DateTime?
+  userType  UserType
+  otp       String
+  previousRides  Ride[]   @relation(name: "RideRequester")
+  ridesAsDriver  Ride[]   @relation(name: "RideDriver")
+  rating    Int? @default(5)
+
+
+  // Relations
+  comments  Comment[]
+}
+
+enum UserType {
+  USER
+  DRIVER
+}
+
+model Ride {
+  id          Int      @id @default(autoincrement())
+  rideId      Int      @unique
+  rideType    rideType @default(CAR)
+  requester   User     @relation(name: "RideRequester",fields: [requesterId], references: [id])  
+  requesterId Int
+  price       Float
+  pickupLoc   String
+  dropoffLoc  String
+  duration    Int?     @default(0)
+  driver      User?    @relation(name: "RideDriver",fields: [driverId], references: [id])
+  driverId    Int?
+  status      RideStatus
+  createdAt   DateTime @default(now())
+  completeAt  DateTime? @updatedAt
+  comments    Comment[]
+
+  
+}
+
+enum rideType{
+  CAR
+  BIKE
+  AUTO
+
+}
+enum RideStatus {
+  REQUESTED
+  ACCEPTED
+  COMPLETED
+}
+
+
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String
+  rating    Int
+  photo     String?
+  author    User     @relation(fields: [authorId], references: [id])  
+  ride      Ride     @relation(fields: [rideId], references: [id])
+  authorId  Int
+  rideId    Int
+
+}
+
+
