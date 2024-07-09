@@ -6,7 +6,7 @@ RideChain is a decentralized cab app built using React Native with Expo for the 
 
 <!-- add photo -->
 
-![Alt text]("./cover_image.png")
+![Cover]("cover_image.png")
 
 ## Table of Contents
 
