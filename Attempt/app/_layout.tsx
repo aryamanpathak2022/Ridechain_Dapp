@@ -8,6 +8,13 @@ import "react-native-get-random-values";
 // import { MetaMaskProvider } from '@metamask/sdk-react';
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
+import { LogBox } from 'react-native';
+
+// Ignore log notification by message
+LogBox.ignoreLogs(['Warning: ...']);
+
+//Ignore all log notifications
+LogBox.ignoreAllLogs();
 
 SplashScreen.preventAutoHideAsync();
 
@@ -41,6 +48,20 @@ if(!fontsLoaded && !error) return null;
      
       <Stack.Screen name="index" options={{ headerShown: false }} />
       <Stack.Screen name="profile" options={{ headerShown: false }} />
+      <Stack.Screen name="(auth)/sign-in" options={{ headerShown: false }} />
+      <Stack.Screen name="auth/sign-up" options={{ headerShown: false }} />
+      <Stack.Screen
+                    name="(auth)"
+                    options={{
+                        headerShown: false
+                    }}
+                />
+                <Stack.Screen
+                    name="(tabs)"
+                    options={{
+                        headerShown: false
+                    }}
+                />
      
     </Stack>
 

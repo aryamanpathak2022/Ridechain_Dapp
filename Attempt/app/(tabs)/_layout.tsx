@@ -3,6 +3,8 @@ import { View, Text, Image } from 'react-native';
 import { Tabs } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { icons } from '../../constants';
+import { Stack } from 'expo-router/stack';
+
 
 const TabIcon = ({ icon, color, name, focused }) => {
   return (
@@ -43,11 +45,18 @@ const TabsLayout = () => {
 
   return (
     <>
+    <Stack>
+      <Stack.Screen
+        name="(tabs)"
+        options={{ headerShown: false }} // Hide the header
+      >
+        </Stack.Screen>
       <Tabs
         screenOptions={{
           tabBarShowLabel: false,
           tabBarActiveTintColor: '#2c82c9',
           tabBarInactiveTintColor: '#b0d4f1',
+           headerShown: false ,
           tabBarStyle: {
             backgroundColor: '#F0F4F8',
             borderTopWidth: 0, // Remove the border by setting width to 0
@@ -65,7 +74,7 @@ const TabsLayout = () => {
               tabBarIcon: ({ color, focused }) => (
                 <TabIcon
                   icon={icons.home}
-                  color={color}
+                  color={"black"}
                   name="Home"
                   focused={focused}
                 />
@@ -82,7 +91,7 @@ const TabsLayout = () => {
               tabBarIcon: ({ color, focused }) => (
                 <TabIcon
                   icon={icons.home}
-                  color={color}
+                  color={"black"}
                   name="Driver"
                   focused={focused}
                 />
@@ -93,19 +102,21 @@ const TabsLayout = () => {
         <Tabs.Screen
           name="profile"
           options={{
-            title: "Profile",
+            title: "Menu",
             headerShown: false,
             tabBarIcon: ({ color, focused }) => (
               <TabIcon
                 icon={icons.profile}
-                color={color}
-                name="Profile"
+                color={"black"}
+                name="Menu"
                 focused={focused}
               />
             ),
           }}
         />
       </Tabs>
+   
+    </Stack>
     </>
   );
 };
