@@ -44,6 +44,7 @@ const App = () => {
   const [rides, setRides] = useState([]);
   const [rideId, setRideId] = useState(null);
   const navigation = useNavigation();
+  const [price, setPirce ] = useState(0);
 
   useEffect(() => {
     const fetchUserType = async () => {
@@ -116,25 +117,23 @@ const App = () => {
   
       try {
         let response = await fetch(
-          `https://api.mapbox.com/search/geocode/v6/reverse?` +
+          `https://api.mapbox.com/geocoding/v5/mapbox.places/${location.coords.longitude},${location.coords.latitude}.json?` +
           new URLSearchParams({
-            longitude: location.coords.longitude,
-            latitude: location.coords.latitude,
-            geometries: 'geojson',
             access_token: MAP_BOX_ACCESS_TOKEN,
           })
         );
   
         if (response.ok) {
           let data = await response.json();
-          
+  
           // Extract the full addresses
-          let addresses = data.features.map(feature => feature.full_address);
+          let addresses = data.features.map(feature => feature.place_name);
+          
           
           // Log the full addresses or set them to your state
-          console.log(addresses);
-          setPickupText(addresses);
-          setPickupResultList([]);
+          console.log(addresses[0]);
+          setPickupText(addresses[0]); // Join addresses if needed
+          setPickupResultList([]); // Clear result list if necessary
         } else {
           console.error('Error:', response.statusText);
         }
@@ -144,6 +143,7 @@ const App = () => {
     }
   };
   
+
   
   
 
@@ -197,7 +197,7 @@ const updateBackend = async (rideId) =>
           rideId: parseInt(rideId),
           pickup: pickupText,
           drop: dropoffText,
-          price: '0', // Replace with actual price if available
+          price: price, // Replace with actual price if available
           duration: '0', // Replace with actual duration if available
           driverId: 0
         })
@@ -329,6 +329,16 @@ const interactWithContract = async () => {
           ItemSeparatorComponent={() => <View style={styles.separator} />}
         />
       )}
+        <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="Your Fare in rupees...."
+          onChangeText={text => {
+            setPirce(text);
+          }}
+        
+        />
+      </View>
       <View style={styles.buttonContainer}>
         <Button mode="contained" onPress={handleButtonPress} style={styles.button}>
           {isConnected ? "Disconnect Wallet" : "Connect Wallet"}

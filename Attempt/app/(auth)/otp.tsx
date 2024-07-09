@@ -1,7 +1,7 @@
 import { View, Text, TextInput, StyleSheet, Alert } from 'react-native';
 import React, { useState, useRef, useEffect } from 'react';
 import CustomButton from '../../components/CustomButton';
-import { useRouter } from 'expo-router';
+import { useRouter, Link } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
@@ -40,6 +40,19 @@ const Otp = () => {
   const handleKeyPress = (e, index) => {
     if (e.nativeEvent.key === 'Backspace' && index > 0 && otp[index] === '') {
       inputs.current[index - 1].focus();
+    }
+  };
+
+  const handlePaste = (e) => {
+    const pastedText = e.nativeEvent.text;
+    if (pastedText.length === 6) {
+      const newOtp = pastedText.split('');
+      setOtp(newOtp);
+      newOtp.forEach((digit, index) => {
+        if (inputs.current[index]) {
+          inputs.current[index].focus();
+        }
+      });
     }
   };
 
@@ -86,7 +99,6 @@ const Otp = () => {
 
   return (
     <View style={styles.container}>
-    
       <Text style={styles.title}>Enter OTP</Text>
       
       <View style={styles.otpContainer}>
@@ -100,27 +112,23 @@ const Otp = () => {
             keyboardType="numeric"
             maxLength={1}
             onKeyPress={(e) => handleKeyPress(e, index)}
+            onPaste={handlePaste}
           />
         ))}
       </View>
       <Text style={styles.subtitle}>Otp sent to {phoneNumber}</Text>
+      <Link href="/sign-in" style={styles.subtitle}>Edit Number</Link>
       <CustomButton
         title="Submit"
         containerStyles={styles.buttonSpacing}
         handlePress={submit}
-        isLoading={false} // Example, set to true if submitting
+        isLoading={false}
       />
       <CustomButton
         title="Resend OTP"
         containerStyles={styles.buttonSpacing}
         handlePress={resendOtp}
-        isLoading={false} // Example, set to true if resending
-      />
-      <CustomButton
-        title="Edit Phone Number"
-        containerStyles={styles.buttonSpacing}
-        handlePress={() => router.push('/sign-in')}
-        isLoading={false} // Example, set to true if resending
+        isLoading={false}
       />
     </View>
   );
