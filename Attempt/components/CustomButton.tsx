@@ -1,18 +1,34 @@
-import { View, Text, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React from 'react';
 
-const CustomButton = ({title,handlePress,containerStyles,textStyles, isLoading}) => {
+const CustomButton = ({ title, handlePress, containerStyles, textStyles, isLoading }) => {
   return (
     <TouchableOpacity 
-    onPress={handlePress}
-    activeOpacity={0.65}
-    className= {`bg-secondary rounded-xl min-h-[64px] justify-center items-center 
-    ${containerStyles} ${isLoading ? 'opacity-50': ''}`}
-    disabled={isLoading}
+      onPress={handlePress}
+      activeOpacity={0.65}
+      style={[styles.button, containerStyles, isLoading && styles.disabled]}
+      disabled={isLoading}
     >
-      <Text className ={`text-primary pblack text-lg ${textStyles}`}>{title}</Text>
+      <Text style={[styles.text, textStyles]}>{title}</Text>
     </TouchableOpacity>
-  )
+  );
 }
-//HERE WE ARE CALLING TITLE AS IT IS THE CUSTOM COMPONENT FROM THE INDEX DIRECTLY
-export default CustomButton
+
+const styles = StyleSheet.create({
+  button: {
+    backgroundColor: 'black', // replace with your secondary color
+    borderRadius: 15,
+    minHeight: 64,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text: {
+    color: '#FFFFFF', // replace with your primary text color
+    fontSize: 18,
+  },
+  disabled: {
+    opacity: 0.5,
+  },
+});
+
+export default CustomButton;
