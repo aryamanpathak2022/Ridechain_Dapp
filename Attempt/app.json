@@ -20,7 +20,11 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.anonymous.Attempt"
+      "package": "com.anonymous.Attempt",
+      "permissions": [
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -30,14 +34,22 @@
     "plugins": [
       "expo-router",
       [
-      "expo-location",
-      {
-        "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
-      }
-    ]
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "9b00ffa7-2612-47c5-b4aa-cdef6500dcfd"
+      }
     }
   }
 }

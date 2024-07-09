@@ -3,6 +3,7 @@ import { Text, View, StyleSheet, Image } from 'react-native';
 import { Redirect,router,Link } from 'expo-router';
 import CustomButton from '@/components/CustomButton';
 import {images} from '../constants';
+
 // import router from '@/router';
 
 export default function App() {
@@ -23,7 +24,10 @@ export default function App() {
                 handlePress={() => router.push('/sign-up')}
                 containerStyles={styles.button}
             />
+
             <StatusBar backgroundColor='#161622' style='dark' />
+          
+
         </View>
     );
 }

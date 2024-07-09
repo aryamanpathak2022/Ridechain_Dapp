@@ -4,6 +4,10 @@
 
 RideChain is a decentralized cab app built using React Native with Expo for the frontend, and Next.js with Solidity on the Ethereum blockchain for the backend. This project aims to provide a decentralized, trustless, and efficient platform for cab services.
 
+<!-- add photo -->
+
+![Alt text]("./cover_image.png")
+
 ## Table of Contents
 
 - [Introduction](#introduction)
