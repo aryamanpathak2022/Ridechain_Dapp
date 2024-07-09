@@ -14,12 +14,12 @@ export default function App() {
             <Text style={styles.subtitle}>Your One Stop <Text style={styles.additional}>Destination</Text></Text>
             <StatusBar style="auto" />
             <CustomButton
-                title="Continue With Phone Number"
+                title="Log In"
                 handlePress={() => router.push('/sign-in')}
                 containerStyles={styles.button}
             />
             <CustomButton
-                title="Register Yourself"
+                title="Sign Up"
                 handlePress={() => router.push('/sign-up')}
                 containerStyles={styles.button}
             />
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
         marginBottom: 30,
     },
     button: {
-        width: '100%',
+        width: '50%',
         marginTop: 15,
         marginBottom:20,
     },

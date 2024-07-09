@@ -53,10 +53,10 @@ const Otp = () => {
 
       if (response.status === 200 || response.status === 201) {
         const token = response.data.token;
-        const userType=response.data.userType;
+        const userType = response.data.userType;
         await AsyncStorage.setItem('token', token);
         await AsyncStorage.setItem('userType', userType);
-        console.log('OTP verified. Token saved to local storage.',token);
+        console.log('OTP verified. Token saved to local storage.', token);
         router.push('../(tabs)/home');
       } else {
         Alert.alert('Error', 'OTP verification failed. Please try again.');
@@ -86,7 +86,9 @@ const Otp = () => {
 
   return (
     <View style={styles.container}>
+    
       <Text style={styles.title}>Enter OTP</Text>
+      
       <View style={styles.otpContainer}>
         {otp.map((digit, index) => (
           <TextInput
@@ -101,16 +103,23 @@ const Otp = () => {
           />
         ))}
       </View>
+      <Text style={styles.subtitle}>Otp sent to {phoneNumber}</Text>
       <CustomButton
         title="Submit"
-        containerStyles="w-full mt-7"
+        containerStyles={styles.buttonSpacing}
         handlePress={submit}
         isLoading={false} // Example, set to true if submitting
       />
       <CustomButton
         title="Resend OTP"
-        containerStyles="w-full mt-4"
+        containerStyles={styles.buttonSpacing}
         handlePress={resendOtp}
+        isLoading={false} // Example, set to true if resending
+      />
+      <CustomButton
+        title="Edit Phone Number"
+        containerStyles={styles.buttonSpacing}
+        handlePress={() => router.push('/sign-in')}
         isLoading={false} // Example, set to true if resending
       />
     </View>
@@ -149,14 +158,9 @@ const styles = StyleSheet.create({
     color: '#333',
     fontFamily: 'Poppins-SemiBold', // Ensure you have the correct font loaded
   },
-  button: {
-    width: 200, // Increased width
-    height: 50, // Increased height
-    borderRadius: 10,
-    backgroundColor: '#333',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 20,
+  buttonSpacing: {
+    width: '50%',
+    marginTop: 10,
   },
 });
 

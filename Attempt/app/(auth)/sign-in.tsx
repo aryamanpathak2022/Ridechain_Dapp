@@ -1,18 +1,19 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { View, Text, ScrollView, Image, StyleSheet, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { images } from '../../constants';
-import FormField from '../../components/FormField';
 import { useRouter, Link } from 'expo-router';
 import CustomButton from '../../components/CustomButton';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import PhoneInput from "react-native-phone-number-input";
+
 
 const SignIn = () => {
-  const [form, setForm] = useState({
-    phoneNumber: '',
-  });
+  const [form, setForm] = useState({ phoneNumber: '' });
   const [isLoading, setIsLoading] = useState(false);
+  const [value, setValue] = useState("");
+  const phoneInputRef = useRef(null); // Create a ref for PhoneInput
   const router = useRouter();
 
   const handlePress = async () => {
@@ -24,8 +25,6 @@ const SignIn = () => {
 
       if (response.status === 200 || response.status === 201) {
         await AsyncStorage.setItem('phoneNumber', form.phoneNumber);
-
-        
         router.push('/otp');
       } else {
         Alert.alert('Error', 'Login failed. Please try again.');
@@ -47,27 +46,35 @@ const SignIn = () => {
             resizeMode="contain"
             style={styles.logo}
           />
-          <Text style={styles.title}>Log-in to RideChain</Text>
+          <Text style={styles.title}>Welcome Back</Text>
         </View>
         <View style={styles.formContainer}>
-          <FormField
-            title="Phone Number"
-            value={form.phoneNumber}
-            handleChangeText={(text) => setForm({ ...form, phoneNumber: text })}
-            otherStyles={styles.formField}
-            keyboardType="phone-pad"
+          <PhoneInput
+            ref={phoneInputRef} // Assign the ref to PhoneInput
+            defaultValue={value}
+            defaultCode="IN"
+            layout="first"
+            onChangeText={(text) => {
+              setValue(text);
+            }}
+            onChangeFormattedText={(text) => setForm({ ...form, phoneNumber: text })}
+            withDarkTheme
+            withShadow
+            autoFocus
+            containerStyle={styles.phoneInputContainer}
+            textContainerStyle={styles.phoneInputText}
           />
           <CustomButton
             title="Log-in"
             handlePress={handlePress}
-            containerStyles="w-full mt-7"
+            containerStyles={styles.buttonContainer}
             isLoading={isLoading}
           />
           <View style={styles.signUpLink}>
             <Text style={styles.signUpText}>Don't have an account?</Text>
             <Link
               href="/sign-up"
-              className="text-lg font-psemibold text-secondary"
+              className="text-lg font-semibold"
               style={styles.signUpLinkText}
             >
               Sign-up
@@ -82,7 +89,7 @@ const SignIn = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F0F4F8', // Replace with your primary background color
+    backgroundColor: '#F0F4F8',
   },
   scrollView: {
     flexGrow: 1,
@@ -91,27 +98,36 @@ const styles = StyleSheet.create({
   innerContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    minHeight: '17%', // Adjust as needed to reduce space
-    marginBottom: 1, // Reduce the bottom margin to decrease the distance
+    minHeight: '17%',
+    marginBottom: 1,
   },
   logo: {
     width: 49,
     height: 38,
   },
   title: {
-    fontSize: 24,
-    color: '#333', // Adjust the color as needed
-    fontWeight: '600',
+    fontSize: 34,
+    color: '#333',
+    fontWeight: '900',
     marginTop: 20,
-    fontFamily: 'Poppins-SemiBold', // Ensure you have the correct font loaded
+    fontFamily: 'Poppins-SemiBold',
   },
   formContainer: {
     flex: 1,
-    justifyContent: 'flex-start', // Adjust as needed
-    paddingTop: 10, // Reduce the top padding to decrease the distance
+    justifyContent: 'flex-start',
+    paddingTop: 10,
   },
-  formField: {
-    marginTop: 10, // Reduce the top margin to decrease the distance
+  phoneInputContainer: {
+    width: '100%',
+    marginVertical: 10,
+    height:"10%"
+  },
+  phoneInputText: {
+    paddingVertical: 0,
+  },
+  buttonContainer: {
+    width: '100%',
+    marginTop: 20,
   },
   signUpLink: {
     flexDirection: 'row',
@@ -120,12 +136,12 @@ const styles = StyleSheet.create({
   },
   signUpText: {
     fontSize: 16,
-    color: '#333', // Adjust the color as needed
-    fontFamily: 'Poppins-Medium', // Ensure you have the correct font loaded
+    color: '#333',
+    fontFamily: 'Poppins-Medium',
   },
   signUpLinkText: {
     fontSize: 16,
-    fontFamily: 'Poppins-SemiBold', // Ensure you have the correct font loaded
+    fontFamily: 'Poppins-SemiBold',
     marginLeft: 5,
   },
 });
