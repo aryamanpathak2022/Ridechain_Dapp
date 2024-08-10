@@ -169,7 +169,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Contributors 
 
-- [Hemang Seth](https://github.com/Hemang-2004)
 - [Aryaman Pathak](https://github.com/Aryamanpathak2022/)
 
 ---
