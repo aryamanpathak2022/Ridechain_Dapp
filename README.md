@@ -10,6 +10,9 @@ RideChain is a decentralized cab app built using React Native with Expo for the 
 - Backend hosted at [Link](https://ride-chain.vercel.app/)
 - Contract Deployed at sepolia test net at address 0x256A8E43D1ED57D2E19a818960ba3089D457b8cb
 
+## Demo video
+[![Watch the video](https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg)](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
+
 ## System Design
 ![Cover](Untitled-2024-08-01-2058.svg)
 
