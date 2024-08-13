@@ -13,6 +13,10 @@ RideChain is a decentralized cab app built using React Native with Expo for the 
 ## Demo video
 [![Watch the video](https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg)](https://www.youtube.com/watch?v=dQw4w9WgXcQ)
 
+<video width="600" controls>
+  <source src="video.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
 ## System Design
 ![Cover](Untitled-2024-08-01-2058.svg)
 
